@@ -36,7 +36,6 @@
   .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .results-count { font-family: sans-serif; font-size: 13px; color: #8892a4; }
   .results-count span { font-weight: 700; color: #1a2744; font-size: 20px; }
-  .new-badge { margin-left: 8px; background: #e8f5ee; color: #1a7a4a; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
   .results-hint { font-size: 11px; color: #8892a4; font-family: sans-serif; }
   .job-card { background: #fff; border: 1px solid #dde2ed; border-radius: 8px; margin-bottom: 8px; cursor: pointer; overflow: hidden; transition: all 0.12s; }
   .job-card.expanded { border-color: #1a2744; box-shadow: 0 4px 16px rgba(26,39,68,0.1); }
@@ -47,11 +46,10 @@
   .job-top { display: flex; justify-content: space-between; gap: 12px; }
   .job-title { font-size: 14px; font-weight: 700; color: #1a2744; }
   .job-company { margin-top: 3px; font-family: sans-serif; font-size: 13px; color: #2d3f6b; font-weight: 600; }
-  .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
-  .job-salary { font-size: 13px; font-weight: 700; color: #1a2744; font-family: sans-serif; }
-  .job-location { font-size: 11px; color: #8892a4; font-family: sans-serif; }
-  .new-tag { background: #e8f5ee; color: #1a7a4a; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 20px; font-family: sans-serif; }
-  .job-meta { margin-top: 6px; display: flex; gap: 14px; font-family: sans-serif; font-size: 11px; color: #8892a4; }
+  .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; max-width: 200px; }
+  .job-location { font-size: 11px; color: #8892a4; font-family: sans-serif; text-align: right; }
+  .job-meta { margin-top: 6px; display: flex; gap: 14px; font-family: sans-serif; font-size: 11px; color: #8892a4; flex-wrap: wrap; }
+  .source-tag { color: #c9a84c; font-weight: 600; }
   .job-body { border-top: 1px solid #dde2ed; padding: 14px 18px 18px 58px; background: #fafbfc; }
   .job-desc { margin: 0 0 14px; font-size: 13px; color: #3d4e70; line-height: 1.6; font-family: sans-serif; }
   .job-actions { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -60,7 +58,6 @@
   .tailoring-box { padding: 10px 14px; background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; font-size: 12px; font-family: sans-serif; color: #2d3f6b; line-height: 1.6; }
   .tailoring-box a { color: #c9a84c; font-weight: 700; }
   .footer-note { margin-top: 20px; padding: 12px 14px; background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; font-family: sans-serif; font-size: 12px; color: #2d3f6b; line-height: 1.6; }
-  .source-tag { font-size: 10px; color: #8892a4; font-family: sans-serif; margin-left: 6px; }
 </style>
 </head>
 <body>
@@ -91,7 +88,7 @@
   <div class="empty">
     <div class="icon">🔍</div>
     <p>Set filters and click <strong>Search Jobs</strong></p>
-    <small>Live Google Jobs listings · Real postings only</small>
+    <small>Live listings from LinkedIn, Indeed, Greenhouse &amp; more</small>
   </div>
 </div>
 
@@ -102,15 +99,15 @@ const SUPABASE_KEY = 'sb_publishable_muqo_BkW9QLoeeFECTDY_g_yO7yOcpB';
 const QUERIES = {
   RTP: [
     { what: 'director strategy operations', where: 'Raleigh NC' },
-    { what: 'director AI transformation business', where: 'Raleigh Durham NC' },
-    { what: 'chief of staff technology', where: 'Raleigh NC' },
-    { what: 'VP business operations strategy', where: 'Raleigh Durham NC' },
+    { what: 'director AI transformation business operations', where: 'Durham NC' },
+    { what: 'chief of staff technology CTO', where: 'Raleigh NC' },
+    { what: 'VP business operations senior director strategy', where: 'Raleigh Durham NC' },
   ],
   SoCal: [
     { what: 'director strategy operations', where: 'Los Angeles CA' },
-    { what: 'director AI transformation business', where: 'Los Angeles CA' },
-    { what: 'chief of staff technology', where: 'San Diego CA' },
-    { what: 'VP business operations strategy', where: 'Los Angeles CA' },
+    { what: 'director AI transformation business operations', where: 'Los Angeles CA' },
+    { what: 'chief of staff technology CTO', where: 'San Diego CA' },
+    { what: 'VP business operations senior director strategy', where: 'Los Angeles CA' },
   ],
 };
 
@@ -135,25 +132,20 @@ document.querySelectorAll('#days-group button').forEach(btn => {
   });
 });
 
-function isNewJob(dateStr) {
-  if (!dateStr) return false;
-  const s = dateStr.toLowerCase();
-  if (s.includes('hour') || s.includes('today') || s.includes('just')) return true;
-  const m = s.match(/(\d+)\s*day/);
-  if (m && parseInt(m[1]) <= 7) return true;
-  return false;
+function getSource(url) {
+  if (!url) return '';
+  if (url.includes('linkedin.com')) return 'LinkedIn';
+  if (url.includes('indeed.com')) return 'Indeed';
+  if (url.includes('greenhouse.io')) return 'Greenhouse';
+  if (url.includes('lever.co')) return 'Lever';
+  if (url.includes('workday.com')) return 'Workday';
+  if (url.includes('glassdoor.com')) return 'Glassdoor';
+  try { return new URL(url).hostname.replace('www.', ''); } catch(e) { return ''; }
 }
 
-function withinDays(dateStr, maxDays) {
-  if (maxDays === 30) return true;
-  if (!dateStr) return true;
-  const s = dateStr.toLowerCase();
-  if (s.includes('hour') || s.includes('today') || s.includes('just')) return true;
-  const m = s.match(/(\d+)\s*day/);
-  if (m) return parseInt(m[1]) <= maxDays;
-  const w = s.match(/(\d+)\s*week/);
-  if (w) return parseInt(w[1]) * 7 <= maxDays;
-  return true;
+function cleanTitle(title) {
+  if (!title) return 'Untitled Role';
+  return title.replace(/\s*[-|·]\s*(LinkedIn|Indeed|Glassdoor|Greenhouse|Lever|Jobs).*$/i, '').trim();
 }
 
 function renderJobs(jobs) {
@@ -163,49 +155,47 @@ function renderJobs(jobs) {
     return;
   }
 
-  const newCount = jobs.filter(j => isNewJob(j.detected_extensions && j.detected_extensions.posted_at || j.date)).length;
-
-  let html = '<div class="results-header"><div class="results-count"><span>' + jobs.length + '</span> live roles found';
-  if (newCount > 0) html += '<span class="new-badge">' + newCount + ' NEW</span>';
-  html += '</div><div class="results-hint">Click to expand · Apply to tailor</div></div>';
+  let html = '<div class="results-header">';
+  html += '<div class="results-count"><span>' + jobs.length + '</span> live roles found</div>';
+  html += '<div class="results-hint">Click to expand · Apply to tailor</div>';
+  html += '</div>';
 
   jobs.forEach((job, idx) => {
     const id = 'job-' + idx;
     const isExpanded = expandedId === id;
     const wasApplied = applied.has(id);
-    const posted = (job.detected_extensions && job.detected_extensions.posted_at) || job.date || '';
-    const isNew = isNewJob(posted);
-    const salary = (job.detected_extensions && job.detected_extensions.salary) || job.salary || '';
+    const title = cleanTitle(job.title);
+    const company = job.company_name || '';
     const location = job.location || '';
-    const via = job.via || '';
+    const desc = job.description || '';
+    const url = job.redirect_url || '#';
+    const source = getSource(url);
     const geoLabel = job._geo === 'RTP' ? 'Raleigh-Durham' : 'Southern California';
-    const link = job.apply_options && job.apply_options[0] && job.apply_options[0].link ? job.apply_options[0].link : (job.related_links && job.related_links[0] ? job.related_links[0].link : '#');
 
     html += '<div class="job-card' + (isExpanded ? ' expanded' : '') + '" id="' + id + '" onclick="toggleCard(\'' + id + '\')">';
     html += '<div class="job-card-header">';
     html += '<div class="job-num">' + (idx + 1) + '</div>';
-    html += '<div class="job-info"><div class="job-top"><div>';
-    html += '<div class="job-title">' + (job.title || '') + (isNew ? ' <span class="new-tag">NEW</span>' : '') + '</div>';
-    html += '<div class="job-company">' + (job.company_name || '') + '</div>';
-    html += '</div><div class="job-right">';
-    if (salary) html += '<div class="job-salary">' + salary + '</div>';
-    html += '<div class="job-location">' + location + '</div>';
+    html += '<div class="job-info">';
+    html += '<div class="job-top">';
+    html += '<div><div class="job-title">' + title + '</div>';
+    if (company) html += '<div class="job-company">' + company + '</div>';
+    html += '</div>';
+    html += '<div class="job-right"><div class="job-location">' + location + '</div></div>';
+    html += '</div>';
+    html += '<div class="job-meta"><span>📍 ' + geoLabel + '</span>';
+    if (source) html += '<span class="source-tag">↗ ' + source + '</span>';
+    html += '</div>';
     html += '</div></div>';
-    html += '<div class="job-meta"><span>📅 ' + (posted || 'Recently') + '</span><span>📍 ' + geoLabel + '</span>';
-    if (via) html += '<span class="source-tag">via ' + via + '</span>';
-    html += '</div></div></div>';
 
     if (isExpanded) {
       html += '<div class="job-body">';
-      if (job.description) {
-        html += '<p class="job-desc">' + job.description.slice(0, 500) + (job.description.length > 500 ? '...' : '') + '</p>';
-      }
+      if (desc) html += '<p class="job-desc">' + desc.slice(0, 500) + (desc.length > 500 ? '...' : '') + '</p>';
       html += '<div class="job-actions">';
       if (!wasApplied) {
         html += '<button class="apply-btn" onclick="applyJob(event,\'' + id + '\')">⚡ Apply — Tailor My Materials</button>';
-        if (link !== '#') html += '<a class="view-btn" href="' + link + '" target="_blank" onclick="event.stopPropagation()">View Posting ↗</a>';
+        if (url !== '#') html += '<a class="view-btn" href="' + url + '" target="_blank" onclick="event.stopPropagation()">View Posting ↗</a>';
       } else {
-        html += '<div class="tailoring-box">✓ <strong>Tailoring initiated.</strong> Copy the full JD from the <a href="' + link + '" target="_blank" onclick="event.stopPropagation()">full posting ↗</a> and paste it into Claude.</div>';
+        html += '<div class="tailoring-box">✓ <strong>Tailoring initiated.</strong> Copy the full JD from the <a href="' + url + '" target="_blank" onclick="event.stopPropagation()">full posting ↗</a> and paste it into Claude.</div>';
       }
       html += '</div></div>';
     }
@@ -231,7 +221,7 @@ async function runSearch() {
   const btn = document.getElementById('search-btn');
   btn.disabled = true;
   btn.textContent = 'Searching...';
-  document.getElementById('body').innerHTML = '<div class="loading"><p>Fetching live Google Jobs listings...</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
+  document.getElementById('body').innerHTML = '<div class="loading"><p>Searching LinkedIn, Indeed, Greenhouse...</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
 
   const geos = geo === 'All' ? ['RTP', 'SoCal'] : [geo];
   const queries = geos.flatMap(g => QUERIES[g].map(q => ({ ...q, geoKey: g })));
@@ -259,11 +249,9 @@ async function runSearch() {
     results.forEach(r => {
       if (r.status !== 'fulfilled') return;
       (r.value.jobs || []).forEach(job => {
-        const key = job.title + job.company_name;
+        const key = job.title + (job.company_name || '') + (job.redirect_url || '');
         if (seen.has(key)) return;
         seen.add(key);
-        const posted = (job.detected_extensions && job.detected_extensions.posted_at) || '';
-        if (!withinDays(posted, days)) return;
         merged.push({ ...job, _geo: r.value.geoKey });
       });
     });
