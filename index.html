@@ -14,7 +14,7 @@
   .controls { background: #fff; border-bottom: 1px solid #dde2ed; padding: 14px 28px; }
   .controls-inner { max-width: 860px; margin: 0 auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .btn-group { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid #dde2ed; }
-  .btn-group button { padding: 8px 14px; border: none; cursor: pointer; font-size: 12px; font-family: sans-serif; background: #fff; color: #1a2744; font-weight: 400; border-right: 1px solid #dde2ed; transition: all 0.12s; }
+  .btn-group button { padding: 8px 14px; border: none; cursor: pointer; font-size: 12px; font-family: sans-serif; background: #fff; color: #1a2744; font-weight: 400; border-right: 1px solid #dde2ed; }
   .btn-group button:last-child { border-right: none; }
   .btn-group button.active { background: #1a2744; color: #fff; font-weight: 700; }
   .btn-group.slate button.active { background: #2d3f6b; }
@@ -27,11 +27,11 @@
   .dot { width: 8px; height: 8px; border-radius: 50%; background: #c9a84c; animation: pulse 1.2s ease-in-out infinite; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes pulse { 0%,80%,100% { opacity: .2; transform: scale(.8); } 40% { opacity: 1; transform: scale(1); } }
+  @keyframes pulse { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
   .empty { text-align: center; padding: 70px 0; }
   .empty .icon { font-size: 36px; margin-bottom: 12px; }
   .empty p { font-family: sans-serif; color: #8892a4; font-size: 13px; }
-  .empty small { font-family: sans-serif; color: #8892a4; font-size: 11px; margin-top: 6px; display: block; }
+  .empty small { display: block; margin-top: 6px; font-family: sans-serif; color: #8892a4; font-size: 11px; }
   .error { padding: 14px; background: #fdecea; border: 1px solid #c0392b; border-radius: 6px; font-family: sans-serif; font-size: 13px; color: #c0392b; margin-bottom: 16px; }
   .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .results-count { font-family: sans-serif; font-size: 13px; color: #8892a4; }
@@ -41,7 +41,7 @@
   .job-card { background: #fff; border: 1px solid #dde2ed; border-radius: 8px; margin-bottom: 8px; cursor: pointer; overflow: hidden; transition: all 0.12s; }
   .job-card.expanded { border-color: #1a2744; box-shadow: 0 4px 16px rgba(26,39,68,0.1); }
   .job-card-header { padding: 14px 18px; display: flex; gap: 14px; align-items: flex-start; }
-  .job-num { min-width: 26px; height: 26px; border-radius: 50%; background: #f5f6fa; color: #8892a4; display: flex; align-items: center; justify-content: center; font-size: 11px; font-family: sans-serif; font-weight: 700; margin-top: 2px; flex-shrink: 0; transition: all 0.12s; }
+  .job-num { min-width: 26px; height: 26px; border-radius: 50%; background: #f5f6fa; color: #8892a4; display: flex; align-items: center; justify-content: center; font-size: 11px; font-family: sans-serif; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
   .job-card.expanded .job-num { background: #1a2744; color: #fff; }
   .job-info { flex: 1; }
   .job-top { display: flex; justify-content: space-between; gap: 12px; }
@@ -50,16 +50,17 @@
   .job-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
   .job-salary { font-size: 13px; font-weight: 700; color: #1a2744; font-family: sans-serif; }
   .job-location { font-size: 11px; color: #8892a4; font-family: sans-serif; }
+  .new-tag { background: #e8f5ee; color: #1a7a4a; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 20px; font-family: sans-serif; }
   .job-meta { margin-top: 6px; display: flex; gap: 14px; font-family: sans-serif; font-size: 11px; color: #8892a4; }
   .job-body { border-top: 1px solid #dde2ed; padding: 14px 18px 18px 58px; background: #fafbfc; }
   .job-desc { margin: 0 0 14px; font-size: 13px; color: #3d4e70; line-height: 1.6; font-family: sans-serif; }
   .job-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .apply-btn { padding: 9px 20px; background: #c9a84c; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-family: sans-serif; font-weight: 700; cursor: pointer; }
-  .apply-btn.done { background: #8892a4; cursor: not-allowed; }
   .view-btn { padding: 9px 16px; background: #fff; color: #1a2744; border: 1px solid #dde2ed; border-radius: 6px; font-size: 12px; font-family: sans-serif; font-weight: 600; text-decoration: none; display: inline-block; }
   .tailoring-box { padding: 10px 14px; background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; font-size: 12px; font-family: sans-serif; color: #2d3f6b; line-height: 1.6; }
   .tailoring-box a { color: #c9a84c; font-weight: 700; }
   .footer-note { margin-top: 20px; padding: 12px 14px; background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; font-family: sans-serif; font-size: 12px; color: #2d3f6b; line-height: 1.6; }
+  .source-tag { font-size: 10px; color: #8892a4; font-family: sans-serif; margin-left: 6px; }
 </style>
 </head>
 <body>
@@ -90,7 +91,7 @@
   <div class="empty">
     <div class="icon">🔍</div>
     <p>Set filters and click <strong>Search Jobs</strong></p>
-    <small>Live listings via Adzuna · Real postings only</small>
+    <small>Live Google Jobs listings · Real postings only</small>
   </div>
 </div>
 
@@ -101,13 +102,15 @@ const SUPABASE_KEY = 'sb_publishable_muqo_BkW9QLoeeFECTDY_g_yO7yOcpB';
 const QUERIES = {
   RTP: [
     { what: 'director strategy operations', where: 'Raleigh NC' },
-    { what: 'director AI transformation', where: 'Durham NC' },
+    { what: 'director AI transformation business', where: 'Raleigh Durham NC' },
     { what: 'chief of staff technology', where: 'Raleigh NC' },
+    { what: 'VP business operations strategy', where: 'Raleigh Durham NC' },
   ],
   SoCal: [
     { what: 'director strategy operations', where: 'Los Angeles CA' },
-    { what: 'director AI transformation', where: 'San Diego CA' },
-    { what: 'chief of staff technology', where: 'Los Angeles CA' },
+    { what: 'director AI transformation business', where: 'Los Angeles CA' },
+    { what: 'chief of staff technology', where: 'San Diego CA' },
+    { what: 'VP business operations strategy', where: 'Los Angeles CA' },
   ],
 };
 
@@ -132,73 +135,77 @@ document.querySelectorAll('#days-group button').forEach(btn => {
   });
 });
 
-function salaryStr(job) {
-  const min = job.salary_min, max = job.salary_max;
-  if (!min && !max) return null;
-  const fmt = n => '$' + Math.round(n / 1000) + 'K';
-  if (min && max && Math.abs(min - max) > 5000) return fmt(min) + ' - ' + fmt(max);
-  if (max) return 'Up to ' + fmt(max);
-  return 'From ' + fmt(min);
+function isNewJob(dateStr) {
+  if (!dateStr) return false;
+  const s = dateStr.toLowerCase();
+  if (s.includes('hour') || s.includes('today') || s.includes('just')) return true;
+  const m = s.match(/(\d+)\s*day/);
+  if (m && parseInt(m[1]) <= 7) return true;
+  return false;
 }
 
-function postedStr(dateStr) {
-  if (!dateStr) return 'Recently';
-  const diff = Math.floor((Date.now() - new Date(dateStr)) / 86400000);
-  if (diff === 0) return 'Today';
-  if (diff === 1) return '1 day ago';
-  if (diff < 7) return diff + ' days ago';
-  if (diff < 14) return '1 week ago';
-  return Math.floor(diff / 7) + ' weeks ago';
+function withinDays(dateStr, maxDays) {
+  if (maxDays === 30) return true;
+  if (!dateStr) return true;
+  const s = dateStr.toLowerCase();
+  if (s.includes('hour') || s.includes('today') || s.includes('just')) return true;
+  const m = s.match(/(\d+)\s*day/);
+  if (m) return parseInt(m[1]) <= maxDays;
+  const w = s.match(/(\d+)\s*week/);
+  if (w) return parseInt(w[1]) * 7 <= maxDays;
+  return true;
 }
 
 function renderJobs(jobs) {
   const body = document.getElementById('body');
-  if (jobs.length === 0) {
-    body.innerHTML = '<div class="error">No listings found. Try expanding to All open roles or All Geographies.</div>';
+  if (!jobs || jobs.length === 0) {
+    body.innerHTML = '<div class="error">No listings found. Try expanding filters or broadening the geography.</div>';
     return;
   }
-  const newCount = jobs.filter(j => {
-    if (!j.created) return false;
-    return Math.floor((Date.now() - new Date(j.created)) / 86400000) <= 7;
-  }).length;
+
+  const newCount = jobs.filter(j => isNewJob(j.detected_extensions && j.detected_extensions.posted_at || j.date)).length;
 
   let html = '<div class="results-header"><div class="results-count"><span>' + jobs.length + '</span> live roles found';
   if (newCount > 0) html += '<span class="new-badge">' + newCount + ' NEW</span>';
   html += '</div><div class="results-hint">Click to expand · Apply to tailor</div></div>';
 
   jobs.forEach((job, idx) => {
-    const salary = salaryStr(job);
-    const posted = postedStr(job.created);
+    const id = 'job-' + idx;
+    const isExpanded = expandedId === id;
+    const wasApplied = applied.has(id);
+    const posted = (job.detected_extensions && job.detected_extensions.posted_at) || job.date || '';
+    const isNew = isNewJob(posted);
+    const salary = (job.detected_extensions && job.detected_extensions.salary) || job.salary || '';
+    const location = job.location || '';
+    const via = job.via || '';
     const geoLabel = job._geo === 'RTP' ? 'Raleigh-Durham' : 'Southern California';
-    const isExpanded = expandedId === job.id;
-    const wasApplied = applied.has(job.id);
+    const link = job.apply_options && job.apply_options[0] && job.apply_options[0].link ? job.apply_options[0].link : (job.related_links && job.related_links[0] ? job.related_links[0].link : '#');
 
-    html += '<div class="job-card' + (isExpanded ? ' expanded' : '') + '" id="card-' + job.id + '" onclick="toggleCard(\'' + job.id + '\')">';
+    html += '<div class="job-card' + (isExpanded ? ' expanded' : '') + '" id="' + id + '" onclick="toggleCard(\'' + id + '\')">';
     html += '<div class="job-card-header">';
     html += '<div class="job-num">' + (idx + 1) + '</div>';
     html += '<div class="job-info"><div class="job-top"><div>';
-    html += '<div class="job-title">' + (job.title || '') + '</div>';
-    html += '<div class="job-company">' + ((job.company && job.company.display_name) || '') + '</div>';
+    html += '<div class="job-title">' + (job.title || '') + (isNew ? ' <span class="new-tag">NEW</span>' : '') + '</div>';
+    html += '<div class="job-company">' + (job.company_name || '') + '</div>';
     html += '</div><div class="job-right">';
     if (salary) html += '<div class="job-salary">' + salary + '</div>';
-    html += '<div class="job-location">' + ((job.location && job.location.display_name) || '') + '</div>';
+    html += '<div class="job-location">' + location + '</div>';
     html += '</div></div>';
-    html += '<div class="job-meta"><span>📅 ' + posted + '</span><span>📍 ' + geoLabel + '</span></div>';
-    html += '</div></div>';
+    html += '<div class="job-meta"><span>📅 ' + (posted || 'Recently') + '</span><span>📍 ' + geoLabel + '</span>';
+    if (via) html += '<span class="source-tag">via ' + via + '</span>';
+    html += '</div></div></div>';
 
     if (isExpanded) {
       html += '<div class="job-body">';
       if (job.description) {
-        html += '<p class="job-desc">' + job.description.slice(0, 450) + (job.description.length > 450 ? '...' : '') + '</p>';
+        html += '<p class="job-desc">' + job.description.slice(0, 500) + (job.description.length > 500 ? '...' : '') + '</p>';
       }
       html += '<div class="job-actions">';
       if (!wasApplied) {
-        html += '<button class="apply-btn" onclick="applyJob(event, \'' + job.id + '\', \'' + (job.redirect_url || '#') + '\')">⚡ Apply — Tailor My Materials</button>';
-        if (job.redirect_url) {
-          html += '<a class="view-btn" href="' + job.redirect_url + '" target="_blank" onclick="event.stopPropagation()">View Posting ↗</a>';
-        }
+        html += '<button class="apply-btn" onclick="applyJob(event,\'' + id + '\')">⚡ Apply — Tailor My Materials</button>';
+        if (link !== '#') html += '<a class="view-btn" href="' + link + '" target="_blank" onclick="event.stopPropagation()">View Posting ↗</a>';
       } else {
-        html += '<div class="tailoring-box">✓ <strong>Tailoring initiated.</strong> Copy the full JD from the <a href="' + (job.redirect_url || '#') + '" target="_blank" onclick="event.stopPropagation()">full posting ↗</a> and paste it into Claude.</div>';
+        html += '<div class="tailoring-box">✓ <strong>Tailoring initiated.</strong> Copy the full JD from the <a href="' + link + '" target="_blank" onclick="event.stopPropagation()">full posting ↗</a> and paste it into Claude.</div>';
       }
       html += '</div></div>';
     }
@@ -211,23 +218,20 @@ function renderJobs(jobs) {
 
 function toggleCard(id) {
   expandedId = expandedId === id ? null : id;
-  const jobs = window._jobs || [];
-  renderJobs(jobs);
+  renderJobs(window._jobs || []);
 }
 
-function applyJob(e, id, url) {
+function applyJob(e, id) {
   e.stopPropagation();
   applied.add(id);
-  const jobs = window._jobs || [];
-  renderJobs(jobs);
+  renderJobs(window._jobs || []);
 }
 
 async function runSearch() {
   const btn = document.getElementById('search-btn');
   btn.disabled = true;
   btn.textContent = 'Searching...';
-
-  document.getElementById('body').innerHTML = '<div class="loading"><p>Fetching live listings...</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
+  document.getElementById('body').innerHTML = '<div class="loading"><p>Fetching live Google Jobs listings...</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
 
   const geos = geo === 'All' ? ['RTP', 'SoCal'] : [geo];
   const queries = geos.flatMap(g => QUERIES[g].map(q => ({ ...q, geoKey: g })));
@@ -245,22 +249,25 @@ async function runSearch() {
           body: JSON.stringify({ what, where, days }),
         })
         .then(r => r.json())
-        .then(data => ({ results: data.results || [], geoKey }))
+        .then(data => ({ jobs: data.jobs || [], geoKey }))
       )
     );
 
     const seen = new Set();
     const merged = [];
+
     results.forEach(r => {
       if (r.status !== 'fulfilled') return;
-      (r.value.results || []).forEach(job => {
-        if (seen.has(job.id)) return;
-        seen.add(job.id);
+      (r.value.jobs || []).forEach(job => {
+        const key = job.title + job.company_name;
+        if (seen.has(key)) return;
+        seen.add(key);
+        const posted = (job.detected_extensions && job.detected_extensions.posted_at) || '';
+        if (!withinDays(posted, days)) return;
         merged.push({ ...job, _geo: r.value.geoKey });
       });
     });
 
-    merged.sort((a, b) => new Date(b.created) - new Date(a.created));
     window._jobs = merged;
     renderJobs(merged);
   } catch (err) {
