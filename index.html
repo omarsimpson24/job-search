@@ -182,7 +182,7 @@ function renderJobs(jobs) {
     html += '</div>';
     html += '<div class="job-right"><div class="job-location">' + location + '</div></div>';
     html += '</div>';
-    html += '<div class="job-meta"><span>📍 ' + geoLabel + '</span>';
+    html += '<div class="job-meta"><span>📍 ' + (job.location || geoLabel) + '</span>';
     if (source) html += '<span class="source-tag">↗ ' + source + '</span>';
     html += '</div>';
     html += '</div></div>';
@@ -243,6 +243,15 @@ async function runSearch() {
       )
     );
 
+    const RTP_TERMS = ['raleigh', 'durham', 'chapel hill', 'cary', 'apex', 'holly springs', 'morrisville', 'wake forest', 'north carolina', ', nc', 'rtp', 'united states', 'anywhere', 'remote'];
+    const SOCAL_TERMS = ['los angeles', 'san diego', 'santa monica', 'irvine', 'anaheim', 'long beach', 'pasadena', 'california', ', ca', 'united states', 'anywhere', 'remote'];
+
+    function matchesGeo(job, geoKey) {
+      const loc = (job.location || '').toLowerCase();
+      const terms = geoKey === 'RTP' ? RTP_TERMS : SOCAL_TERMS;
+      return terms.some(t => loc.includes(t));
+    }
+
     const seen = new Set();
     const merged = [];
 
@@ -251,6 +260,7 @@ async function runSearch() {
       (r.value.jobs || []).forEach(job => {
         const key = job.title + (job.company_name || '') + (job.redirect_url || '');
         if (seen.has(key)) return;
+        if (!matchesGeo(job, r.value.geoKey)) return;
         seen.add(key);
         merged.push({ ...job, _geo: r.value.geoKey });
       });
